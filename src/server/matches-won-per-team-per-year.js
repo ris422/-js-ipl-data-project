@@ -16,7 +16,7 @@ function dumpJSON(data, outputPath){
     fs.writeFileSync(outputPath, JSON.stringify(data, null, 2))
 }
 
-function calculateMatchesWonPerTeamPerYear(matchesData, deliveriesData) {
+function calculateMatchesWonPerTeamPerYear(matchesData) {
     const matchesWonPerTeamPerYear = {};
     const uniqueMatchIds = new Set();
     matchesData.forEach(match => {
@@ -40,8 +40,7 @@ function calculateMatchesWonPerTeamPerYear(matchesData, deliveriesData) {
 async function main() {
     try{
         const matchesData = await readCSV('../data/matches.csv');
-        const deliveriesData = await readCSV('../data/deliveries.csv');
-        const matchesWonPerTeamPerYear = calculateMatchesWonPerTeamPerYear(matchesData, deliveriesData);
+        const matchesWonPerTeamPerYear = calculateMatchesWonPerTeamPerYear(matchesData);
         dumpJSON(matchesWonPerTeamPerYear, '../public/output/matchesWonPerTeamPerYear.json');
         console.log('Matches per year data dumped into output/matches_per_year.json');
     }
